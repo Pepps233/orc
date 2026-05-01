@@ -3,3 +3,5 @@ dist/
 .env
 .claude/
 CLAUDE.md
+opencode.json
+.opencode/
