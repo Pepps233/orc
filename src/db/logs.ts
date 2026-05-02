@@ -26,9 +26,6 @@ export function insertLog(entry: LogInput): void {
   ).run(id, entry.subtaskId, entry.stream, entry.line, timestamp);
 }
 
-let insertBatchStmt: ReturnType<ReturnType<typeof getDb>["prepare"]> | null =
-  null;
-
 export function insertLogBatch(entries: LogInput[]): void {
   if (entries.length === 0) return;
 

@@ -60,6 +60,11 @@ export function initialize(): void {
       timestamp TEXT NOT NULL,
       FOREIGN KEY (subtask_id) REFERENCES subtasks(id)
     );
+
+    CREATE INDEX IF NOT EXISTS idx_tasks_created_at ON tasks(created_at);
+    CREATE INDEX IF NOT EXISTS idx_subtasks_task_id ON subtasks(task_id);
+    CREATE INDEX IF NOT EXISTS idx_subtasks_status ON subtasks(status);
+    CREATE INDEX IF NOT EXISTS idx_subtask_logs_subtask_id ON subtask_logs(subtask_id);
   `);
 }
 

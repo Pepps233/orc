@@ -97,18 +97,12 @@ export function updateSubtaskStatus(
   status: SubtaskStatus
 ): void {
   const db = getDb();
-  const completedAt =
-    status === "passed" || status === "failed"
-      ? new Date().toISOString()
-      : null;
+  const isTerminal = status === "passed" || status === "failed";
+  const completedAt = isTerminal ? new Date().toISOString() : null;
 
-  if (completedAt) {
-    db.prepare(
-      "UPDATE subtasks SET status = ?, completed_at = ? WHERE id = ?"
-    ).run(status, completedAt, id);
-  } else {
-    db.prepare("UPDATE subtasks SET status = ? WHERE id = ?").run(status, id);
-  }
+  db.prepare(
+    "UPDATE subtasks SET status = ?, completed_at = ? WHERE id = ?"
+  ).run(status, completedAt, id);
 }
 
 export function updateSubtaskResult(
