@@ -70,11 +70,19 @@ async function chatOpenAIWithTools(
 
   const choice = response.choices[0]?.message;
   const toolCalls: ToolCall[] =
-    choice?.tool_calls?.map((tc) => ({
-      id: tc.id,
-      name: tc.function.name,
-      arguments: JSON.parse(tc.function.arguments),
-    })) ?? [];
+    choice?.tool_calls?.map((tc) => {
+      let args: Record<string, unknown>;
+      try {
+        args = JSON.parse(tc.function.arguments);
+      } catch {
+        args = {};
+      }
+      return {
+        id: tc.id,
+        name: tc.function.name,
+        arguments: args,
+      };
+    }) ?? [];
 
   return {
     content: choice?.content ?? "",

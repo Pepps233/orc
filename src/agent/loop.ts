@@ -64,6 +64,7 @@ Instructions:
         content: response.content || "(tool calls requested)",
       });
 
+      const toolResults: string[] = [];
       for (const tc of response.toolCalls) {
         const tool = getTool(tc.name);
         let result: string;
@@ -77,11 +78,13 @@ Instructions:
           result = `Unknown tool: ${tc.name}`;
         }
 
-        messages.push({
-          role: "user",
-          content: `Tool result for ${tc.name}(${JSON.stringify(tc.arguments)}):\n${result}`,
-        });
+        toolResults.push(`Tool result for ${tc.name}(${JSON.stringify(tc.arguments)}):\n${result}`);
       }
+
+      messages.push({
+        role: "user",
+        content: toolResults.join("\n\n"),
+      });
     } else {
       return {
         subtaskId: payload.subtaskId,

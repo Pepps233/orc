@@ -57,6 +57,7 @@ app.post("/task", async (req, res) => {
     console.error(`Failed to POST result to orchestrator: ${message}`);
   }
 
+  peerMessageQueue.length = 0;
   isRunning = false;
 });
 
