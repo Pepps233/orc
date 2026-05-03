@@ -15,7 +15,6 @@ export async function createContainer(
       NetworkMode: config.networkName,
       CpuShares: Math.round(config.cpuLimit * 1024),
       Memory: config.memoryMb * 1024 * 1024,
-      ReadonlyRootfs: true,
       AutoRemove: false,
     },
   });

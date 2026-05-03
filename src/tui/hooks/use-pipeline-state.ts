@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import type { Subtask, LogEntry } from "../../types.js";
 
 export interface Event {
@@ -24,9 +24,6 @@ export function usePipelineState(initialPrompt: string) {
     events: [],
     progress: { passed: 0, total: 0 },
   });
-
-  const stateRef = useRef(state);
-  stateRef.current = state;
 
   const onSubtaskStatusChange = useCallback((subtask: Subtask) => {
     setState((prev) => {
